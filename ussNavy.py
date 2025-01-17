@@ -60,11 +60,8 @@ def ships(column , row):
 
 
 if __name__ == '__main__':
-
-    shipCount = sum( len(position) for position in shipsData.values())
     affiche(grid)
-    print(f"nombre de tire pour abattre toute la flotte : {shipCount}")
-
+    shipCount = sum(len(position) for position in shipsData.values())
     while shipCount > 0:
 
         column = (input("sur quel colone voulez vous tirez ?  A a J: "))
@@ -76,6 +73,8 @@ if __name__ == '__main__':
             print("deja shooter ici !! ")
         else:
             print("looper !!")
+
+        shipCount = sum(len(position) for position in shipsData.values())
         affiche(grid)
 
         print(f"reste : {shipCount} shoot pour abattre tout les bateaux ")
