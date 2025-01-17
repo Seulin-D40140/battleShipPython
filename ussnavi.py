@@ -21,6 +21,7 @@ def affiche (table):
     for i in range(10):
         print( i+1 , table[i])
 
+
 shipsData = \
     {
         "aircraftCarrier": ['b2', 'c2', 'd2', 'e2', 'f2'],
@@ -30,6 +31,7 @@ shipsData = \
         "torpedo": ['d9', 'e9'],
     }
 
+
 def ships(column , row):
 
     letters = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7, "I": 8, "J": 9}
@@ -38,7 +40,7 @@ def ships(column , row):
     shoot = column + row
 
     if  grid[number-1][letters[letter]] == ' X ' or grid[number-1][letters[letter]] == ' o ':
-        print("deja shooter ici !! ")
+
         return 0
 
     else:
@@ -48,7 +50,6 @@ def ships(column , row):
 
                 position.remove(shoot)
                 grid[number - 1][letters[letter]] = ' X '
-                print(f"toucher en {shoot} !!")
 
                 if len(position) < 1:
                     print(f"bravo {ship} couler !!!!")
@@ -56,8 +57,7 @@ def ships(column , row):
 
             else:
                 grid[number - 1][letters[letter]] = ' o '
-                print("looper !!")
-                return 0
+
 
 if __name__ == '__main__':
 
@@ -69,8 +69,15 @@ if __name__ == '__main__':
 
         column = (input("sur quel colone voulez vous tirez ?  A a J: "))
         row = (input("sur quel ligne voulez vous tirez ?  1 a 9 : "))
-        shipCount -= ships(column, row)
+        shipResult = ships(column, row)
+        if shipResult == 1:
+            print("toucher ! ")
+        elif shipResult == 0:
+            print("deja shooter ici !! ")
+        else:
+            print("looper !!")
         affiche(grid)
+
         print(f"reste : {shipCount} shoot pour abattre tout les bateaux ")
 
     print("bravo toute la flotte a etait couler ! ")
