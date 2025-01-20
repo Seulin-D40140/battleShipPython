@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 from model.ShipModel import ship
-from  model.GridModel import gridM
+from model.GridModel import gridM
 
-grid : list[list[str]] = [[' . ' for x in range(10)] for x in range(10)]
-
-def affiche ( table : list[list[str]] ) :
-    print("  |  A  |   B  |   C  |   D  |   E  |   F  |   G  |   H  |   I  |   J  |")
-    for i in range(10):
-        print( i+1 , table[i])
+grid : list[list[str]] = gridM([[' . ' for x in range(10)] for x in range(10)])
 
 shipsDatas = \
     {
@@ -27,39 +22,39 @@ def shipGame( column : str , row : str ):
     shoot : str = column + row
 
     if  grid[number-1][letters[letter]] == ' X ' or grid[number-1][letters[letter]] == ' o ':
-
         return 0
-
     else:
         for shipName , shipDInfos in shipsDatas.items():
             if shoot in shipDInfos.position:
-                grid[number - 1][letters[letter]] = ' X '
+                gridM.displayOnGrid(grid , number  ,  letters[letter] , ' X ')
                 shipDInfos.isActive += 1
+                
                 if shipDInfos.isActive == shipDInfos.shipLength():
                     print(f"bravo {shipName} couler !!!!")
                 return 1
 
             else:
-                grid[number - 1][letters[letter]] = ' o '
+                gridM.displayOnGrid(grid , number  ,  letters[letter] , ' o ')
 
-if __name__ == '__main__':
-    affiche(grid)
-    shipCount : int = sum(shipInfo.shipLength() for shipInfo in shipsDatas.values())
+def mainToMain() :
+    gridM.display(grid)
+
+    shipCount: int = sum(shipInfo.shipLength() for shipInfo in shipsDatas.values())
+
     while shipCount > 0:
-
         column = (input("sur quel colone voulez vous tirez ?  A a J: "))
         row = (input("sur quel ligne voulez vous tirez ?  1 a 9 : "))
-        shipResult : int  = shipGame(column , row)
-        if shipResult == 1:
-            print("toucher ! ")
-        elif shipResult == 0:
-            print("deja shooter ici !! ")
-        else:
-            print("looper !!")
+        shipResult: int = shipGame(column, row)
+
+        print(ship.shipTouchOrNot(shipResult))
+
         shipCount = sum(shipInfo.shipLength() for shipInfo in shipsDatas.values())
-        affiche(grid)
+
+        gridM.display(grid)
 
         print(f"reste : {shipCount} shoot pour abattre tout les bateaux ")
-        print(shipsDatas)
 
     print("bravo toute la flotte a etait couler ! ")
+
+if __name__ == '__main__':
+    mainToMain()
